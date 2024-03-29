@@ -3,7 +3,7 @@ from pretaitement import get_data, FileLoader
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import cross_val_predict, cross_val_score, train_test_split
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, precision_score, recall_score, f1_score, classification_report
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -20,6 +20,7 @@ def naive_bayes_classification(matrix, classes):
     precision = precision_score(classes, y_pred, average="macro")
     recall = recall_score(classes, y_pred, average="macro")
     f_score = f1_score(classes, y_pred, average="macro")
+    print(classification_report(classes, y_pred))
     conf_matrix = confusion_matrix(classes, y_pred)
     disp = ConfusionMatrixDisplay(conf_matrix, display_labels=np.unique(classes))
     disp.plot(cmap="OrRd")
@@ -34,10 +35,10 @@ def main():
     corpus, classes = get_data(file)
     matrix = get_matrix(corpus)
     accuracy, precision, recall, f_score = naive_bayes_classification(matrix, classes)
-    print(f"Accuracy: {accuracy}")
-    print(f"precision: {precision}")
-    print(f"recall: {recall}")
-    print(f"f_score: {f_score}")
+    # print(f"Accuracy: {accuracy}")
+    # print(f"precision: {precision}")
+    # print(f"recall: {recall}")
+    # print(f"f_score: {f_score}")
 
 if __name__ == "__main__":
     main()
