@@ -93,7 +93,7 @@ def analyse(corpus)-> Corpus:
             
             for phrase in phrases :
                 brut = phrase.lstrip("1234567890).:;, ")
-                text = re.sub("<.*?>", "", brut).lstrip("1234567890).:;, ")
+                text = re.sub("<.*?>", "", brut).lstrip("1234567890).:;, ").replace(",", "")
                 ndyn = len(re.findall("<dyn", brut))
                 npos = len(re.findall("pol\s?=\s?[\"\']pos[\"\']", brut,
                                       re.IGNORECASE))
@@ -142,7 +142,7 @@ def save_csv(corpus: Corpus, output_file: Path) -> None:
     """Enregistrer le corpus dans un csv"""
     
     with open(output_file, mode='a', newline='') as fichier_csv:
-        writer = csv.writer(fichier_csv)
+        writer = csv.writer(fichier_csv, delimiter = "|")
         
         writer.writerow([
                          "Fichier",
