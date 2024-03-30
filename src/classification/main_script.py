@@ -16,8 +16,9 @@ from sklearn.metrics import (
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from naive_bayes import naive_bayes_classification
-from svm import svm_classification
+from algorithms import naive_bayes_classification, svm_classification
+# from naive_bayes import naive_bayes_classification
+# from svm import svm_classification
 
 
 class FileLoader:
