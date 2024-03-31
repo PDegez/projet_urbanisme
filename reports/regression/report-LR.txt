@@ -1,0 +1,5 @@
+Mean Squared Error:           0.9063418286394404
+Root MSE:                     0.952019867775584
+Mean Absolute Error:          0.44831194582980904
+R squared:                    0.7062529394621113
+Pseudo-accuracy (0.5):        73.77450980392157
