@@ -81,6 +81,12 @@ def regression_report(y, y_hat, threshold=0.5):
     return final_report
 
 
+def plot_regression(y, y_hat):
+    x = list(range(len(y)))
+    plt.scatter(x, y)
+    plt.scatter(x, y_hat)
+    plt.show()
+
 def create_accuracy_score(y, y_hat, threshold):
     correct_predictions = sum(abs(y - y_hat) <= threshold)
     accuracy = (correct_predictions / len(y)) * 100
@@ -123,7 +129,8 @@ def main():
     # Lancement du classifieur
     y_hat = modeles[args.classifieur](matrix, y)
     report = regression_report(y, y_hat)
-    save_report(report, output)
+    #save_report(report, output)
+    plot_regression(y, y_hat)
 
 
 if __name__ == "__main__":
