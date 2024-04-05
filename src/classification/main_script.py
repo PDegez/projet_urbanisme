@@ -16,7 +16,7 @@ from sklearn.metrics import (
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from algorithms import naive_bayes_classification, svm_classification
+from algorithms import naive_bayes_classification, random_forest_classification, svm_classification
 # from naive_bayes import naive_bayes_classification
 # from svm import svm_classification
 
@@ -63,8 +63,7 @@ def print_error():
 modeles = {
     "NB": naive_bayes_classification,
     "SVM": svm_classification,
-    "DT": "plop",
-    "RF": "plop",
+    "RF": random_forest_classification,
 }
 
 
