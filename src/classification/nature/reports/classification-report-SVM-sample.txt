@@ -1,0 +1,10 @@
+              precision    recall  f1-score   support
+
+         cre       0.71      0.81      0.76       250
+        main       0.88      0.86      0.87       250
+        modi       0.75      0.74      0.75       250
+         rep       0.82      0.74      0.78       250
+
+    accuracy                           0.79      1000
+   macro avg       0.79      0.79      0.79      1000
+weighted avg       0.79      0.79      0.79      1000
