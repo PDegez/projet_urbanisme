@@ -7,18 +7,21 @@ Created on Fri Mar 29 11:27:53 2024
 """
 
 import argparse
+import ast
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import (
     classification_report,
     confusion_matrix,
     ConfusionMatrixDisplay,
 )
+from algorithms import (
+    naive_bayes_classification,
+    random_forest_classification,
+    svm_classification)
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from algorithms import naive_bayes_classification, random_forest_classification, svm_classification
-# from naive_bayes import naive_bayes_classification
-# from svm import svm_classification
+
 
 
 class FileLoader:
@@ -49,6 +52,27 @@ def get_matrix(phrases):
     matrix = vectorizer.fit_transform(phrases).toarray()
 
     return matrix
+
+
+def clean_and_convert(vector_string):
+    """
+    Transformation des vecteurs dans le csv de string à liste
+    
+    """
+    
+    cleaned_string = vector_string.replace('\n', '').replace('[', '').replace(']', '').strip()
+    vector = np.fromstring(cleaned_string, sep=' ')
+    
+    return vector
+
+
+def load_corpus(csv_path):
+    df = pd.read_csv(csv_path, sep="|")
+    df['vectors'] = df['vectors'].apply(clean_and_convert)
+    x_data = np.stack(df['vectors'].values)
+    y_data = df["class"].to_numpy()
+    
+    return x_data, y_data
 
 
 def print_error():
@@ -100,6 +124,12 @@ def main():
         type=str,
         help="Chemin vers le fichier pour sauvegarder les scores.",
     )
+    parser.add_argument(
+        "-wtv",
+        "--word_to_vec",
+        action="store_true",
+        help="Importer les vecteurs depuis word_to_vec",
+    )
     args = parser.parse_args()
     if not args.classifieur:
         print_error()
@@ -107,11 +137,16 @@ def main():
     output = args.output_file
     if not output:
         output = f"classification-report-{args.classifieur}.txt"
+    
+    if args.word_to_vec :
+        matrix, classes = load_corpus(args.input_file)
+    
+    else:    
     # Load le corpus et extrait les vecteurs (matrices) et les classes
-    loader = FileLoader()
-    file = loader.load(args.input_file)
-    phrases, classes = get_data(file)
-    matrix = get_matrix(phrases)
+        loader = FileLoader()
+        file = loader.load(args.input_file)
+        phrases, classes = get_data(file)
+        matrix = get_matrix(phrases)
 
     # Lancement du classifieur
     prediction = modeles[args.classifieur](matrix, classes)
